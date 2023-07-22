@@ -35,7 +35,7 @@ $row_contributions = mysqli_fetch_assoc($result_contributions);
 $total_capital_contributions = $row_contributions['total_contributions'];
 
 // Calculate the remaining balance
-$remaining_balance = $total_capital_contributions - $total_amount;
+// $remaining_balance = $total_capital_contributions - $total_amount;
 
 // Close the database connection
 mysqli_close($connection);
@@ -117,9 +117,9 @@ mysqli_close($connection);
     </div>
 
     <!-- Display the remaining balance -->
-    <div class="invoice-details">
+    <!-- <div class="invoice-details">
         <p>Remaining Balance: <?php echo $remaining_balance; ?></p>
-    </div>
+    </div> -->
 
     <!-- Add the "Pay Bill" button with the link to mark the purchase order as paid -->
     <div class="invoice-details">

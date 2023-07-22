@@ -201,7 +201,7 @@ $result_accounts = mysqli_query($connection, $sql_fetch_accounts);
         <tr>
             <th>ID</th>
             <th>Date</th>
-            <th>Description</th>
+            <th>Particulars</th>
             <!-- <th>Account Name</th> -->
             <th>Transaction Type</th>
             <th>Debited Account</th>
