@@ -40,6 +40,6 @@ mysqli_query($connection, $delete_sql);
 mysqli_close($connection);
 
 // Redirect back to the "create_purchase_invoice.php" page after completing the payment
-header('Location: create_purchase_invoice.php');
+header('Location: create_record_capital.php');
 exit();
 ?>

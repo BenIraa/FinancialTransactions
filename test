@@ -1,34 +1,68 @@
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Record Capital Contribution</title>
-    <style>
-       
-    </style>
-</head>
-<body>
-<?php include 'sidebar.php'; ?>
-    <h2>Record Capital Contribution</h2>
-    
-        <!-- Display the table with data from the "contribution_capital" table -->
-    <table>
-        <tr>
-            <th>Contribution ID</th>
-            <th>Amount</th>
-            <th>Date</th>
-            <!-- Add more columns if needed -->
-        </tr>
-        <?php
-        while ($row = mysqli_fetch_assoc($result)) {
-            echo '<tr>';
-            echo '<td>' . $row['contribution_id'] . '</td>';
-            echo '<td>' . $row['amount'] . '</td>';
-            echo '<td>' . $row['date'] . '</td>';
-            // Add more columns if needed
-            echo '</tr>';
+/* Your CSS styles for the specific page */
+        body {
+            font-family: Arial, sans-serif;
         }
-        ?>
-    </table>
-</body>
-</html>
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+       
+        form {
+            width: 60%;
+            margin: auto;
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        form input[type="text"],
+        form input[type="date"],
+        form select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        form select {
+            height: 36px;
+        }
+
+        form input[type="submit"] {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        form input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        table {
+            width: 80%;
+            margin: auto;
+            margin-top: 30px;
+            margin-right: 10px;
+            border-collapse: collapse;
+        }
+
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        table th {
+            background-color: #f2f2f2;
+        }
