@@ -1,5 +1,6 @@
 /* CSS for the sidebar */
 .sidebar {
+    font-family: 'Nunito', sans-serif;
     width: 200px;
     height: 100%;
     background-color: #333;

@@ -206,7 +206,7 @@ $result_accounts = mysqli_query($connection, $sql_fetch_accounts);
             <th>Transaction Type</th>
             <th>Debited Account</th>
             <th>Credit Account</th>
-            <th>Account</th>
+            <th>Amount</th>
 
         </tr>
         <?php

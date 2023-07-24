@@ -8,7 +8,9 @@ if (!$connection) {
 }
 
 // Fetch data from the "completed_purchase_orders" table
-$sql = "SELECT * FROM completed_purchase_orders";
+$sql = "SELECT completed_purchase_orders.*, products.product_name 
+        FROM completed_purchase_orders 
+        INNER JOIN products ON completed_purchase_orders.product_id = products.product_id";
 $result = mysqli_query($connection, $sql);
 
 // Check if the query was successful
@@ -57,6 +59,22 @@ mysqli_close($connection);
         th {
             background-color: #f2f2f2;
         }
+        /* Style the "Sell" link */
+        .td a {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            cursor: pointer;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        .sell-link:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 <body>
@@ -68,22 +86,24 @@ mysqli_close($connection);
         <tr>
             <th>Order ID</th>
             <th>Vendor ID</th>
-            <th>Product ID</th>
+            <th>Product Name</th>
             <th>Quantity</th>
             <th>Amount</th>
             <th>Order Date</th>
             <th>Completed Date</th>
+            <th>Sell</th>
         </tr>
         <?php
         while ($row = mysqli_fetch_assoc($result)) {
             echo '<tr>';
             echo '<td>' . $row['order_id'] . '</td>';
             echo '<td>' . $row['vendor_id'] . '</td>';
-            echo '<td>' . $row['product_id'] . '</td>';
+            echo '<td>' . $row['product_name'] . '</td>';
             echo '<td>' . $row['quantity'] . '</td>';
             echo '<td>' . $row['amount'] . '</td>';
             echo '<td>' . $row['order_date'] . '</td>';
             echo '<td>' . $row['completed_date'] . '</td>';
+            echo '<td><a href="sell_product.php?id=' . $row['product_id'] . '">Sell</a></td>';
             echo '</tr>';
         }
         ?>
