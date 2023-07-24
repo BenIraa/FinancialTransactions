@@ -17,6 +17,7 @@ $liabilities = [];
 $equity = [];
 $income = [];
 $expenses = [];
+$inventoryAmount = 0; // Variable to store the total amount of completed_purchase_orders
 
 // Categorize accounts based on account type
 while ($row = mysqli_fetch_assoc($result)) {
@@ -48,7 +49,33 @@ foreach ($assets as $asset) {
     $totalAssets += $asset['account_balance'];
 }
 
-// Calculate other totals as needed
+$totalLiabilities = 0;
+foreach ($liabilities as $liability) {
+    $totalLiabilities += $liability['account_balance'];
+}
+
+$totalEquity = 0;
+foreach ($equity as $equityAccount) {
+    $totalEquity += $equityAccount['account_balance'];
+}
+
+$totalIncome = 0;
+foreach ($income as $incomeAccount) {
+    $totalIncome += $incomeAccount['account_balance'];
+}
+
+$totalExpenses = 0;
+foreach ($expenses as $expense) {
+    $totalExpenses += $expense['account_balance'];
+}
+
+// Calculate the total amount of completed_purchase_orders as assets
+$sql = "SELECT SUM(quantity * amount) AS total_amount FROM completed_purchase_orders";
+$result = mysqli_query($connection, $sql);
+if ($result && mysqli_num_rows($result) > 0) {
+    $row = mysqli_fetch_assoc($result);
+    $inventoryAmount = (float)$row['total_amount'];
+}
 
 // Close the database connection
 mysqli_close($connection);
@@ -60,21 +87,20 @@ mysqli_close($connection);
     <title>Balance Sheet</title>
     <!-- Your CSS styles for the balance sheet here -->
     <style>
-        /* Add your CSS styles for the balance sheet */
         body {
             font-family: 'Nunito', sans-serif;
             background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
         }
 
         h1 {
             text-align: center;
             color: #333;
             margin: 20px 0;
-            
         }
 
         table {
-            
             width: 80%;
             margin: 20px auto;
             margin-right: 10px;
@@ -110,13 +136,49 @@ mysqli_close($connection);
                 <td><?php echo $asset['account_balance']; ?></td>
             </tr>
         <?php endforeach; ?>
-        <!-- Repeat the same structure for other account types (liabilities, equity, income, expenses) -->
-        <!-- Display total balances for each category -->
+
+        <!-- Display the completed_purchase_orders as assets -->
+        <tr>
+            <td>Completed Purchase Orders (Inventory)</td>
+            <td><?php echo $inventoryAmount; ?></td>
+        </tr>
         <tr>
             <td>Total Assets</td>
             <td><?php echo $totalAssets; ?></td>
         </tr>
-        <!-- Display other totals as needed -->
+
+        <!-- Display the liabilities -->
+        <tr>
+            <th>Liabilities</th>
+            <th>Amount</th>
+        </tr>
+        <?php foreach ($liabilities as $liability) : ?>
+            <tr>
+                <td><?php echo $liability['account_name']; ?></td>
+                <td><?php echo $liability['account_balance']; ?></td>
+            </tr>
+            <tr>
+            <td>Total Liabilities</td>
+            <td><?php echo $totalLiabilities; ?></td>
+        </tr>
+        <?php endforeach; ?>
+
+        <!-- Display the equity -->
+        <tr>
+            <th>Equity</th>
+            <th>Amount</th>
+        </tr>
+        <?php foreach ($equity as $equityAccount) : ?>
+            <tr>
+                <td><?php echo $equityAccount['account_name']; ?></td>
+                <td><?php echo $equityAccount['account_balance']; ?></td>
+            </tr>
+        <?php endforeach; ?>   
+        <tr>
+            <td>Total Equity</td>
+            <td><?php echo $totalEquity; ?></td>
+        </tr>
+       
     </table>
 </body>
 </html>
