@@ -48,7 +48,7 @@ mysqli_close($connection);
 
         /* Center the content */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Nunito', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;

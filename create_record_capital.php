@@ -36,7 +36,7 @@ mysqli_close($connection);
     <title>Create Record Capital</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Nunito', sans-serif;
             background-color: #f1f1f1;
             margin: 0;
             padding: 0;

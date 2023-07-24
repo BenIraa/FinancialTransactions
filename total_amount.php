@@ -5,7 +5,7 @@
     <style>
         /* Your CSS styles for the page */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Nunito', sans-serif;
         }
 
         h1,h4 {

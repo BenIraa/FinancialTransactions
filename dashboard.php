@@ -16,7 +16,7 @@ if (!isset($_SESSION['user_id'])) {
     <style>
         /* Your dashboard and sidebar CSS styles */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Nunito', sans-serif;
             background-color: #f1f1f1;
             margin: 0;
             padding: 0;

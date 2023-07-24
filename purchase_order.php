@@ -14,7 +14,7 @@ if (!isset($_SESSION['user_id'])) {
     <title>Create Purchase Order</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Nunito', sans-serif;
             background-color: #f1f1f1;
             margin: 0;
             padding: 0;

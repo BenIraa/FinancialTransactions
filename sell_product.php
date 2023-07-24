@@ -1,5 +1,3 @@
-<!-- sell_product.php -->
-
 <?php
 // Retrieve the product ID from the URL parameter
 if (isset($_GET['id'])) {
@@ -17,13 +15,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $soldPrice = (float)$_POST['sold_price'];
     $dateSold = $_POST['date'];
 
-    // Validation and selling process will be done here
-    // ...
-    // Insert the sale data into the product_sales table
-    // Update the remaining quantity in the completed_purchase_orders table
-    // ...
+    // Establish a new database connection (replace with your database credentials)
+    $connection = mysqli_connect('localhost', 'root', '', 'accounting_system');
+
+    // Check if the connection was successful
+    if (!$connection) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+
+    // Fetch the available quantity of the selected product from the completed_purchase_orders table
+    $sql = "SELECT quantity FROM completed_purchase_orders WHERE product_id = $product_id";
+    $result = mysqli_query($connection, $sql);
+
+    // Check if the product exists in the completed_purchase_orders table
+    if (mysqli_num_rows($result) === 0) {
+        echo '<p>Selected product does not exist or is not available for sale.</p>';
+    } else {
+        $row = mysqli_fetch_assoc($result);
+        $availableQuantity = (int)$row['quantity'];
+
+        // Check if the quantity to sell is valid
+        if ($quantityToSell > $availableQuantity) {
+            echo '<p>Cannot sell more quantity than available.</p>';
+        } else {
+            // Insert the sale data into the sold_products table
+            $sql = "INSERT INTO sold_products (product_id, quantity_sold, price, date_sold) VALUES ($product_id, $quantityToSell, $soldPrice, '$dateSold')";
+            mysqli_query($connection, $sql);
+
+            // Update the remaining quantity in the completed_purchase_orders table
+            $remainingQuantity = $availableQuantity - $quantityToSell;
+            $sql = "UPDATE completed_purchase_orders SET quantity = $remainingQuantity WHERE product_id = $product_id";
+            mysqli_query($connection, $sql);
+            // Calculate the total sale amount (price * quantity) for the sale
+            $totalSaleAmount = $soldPrice * $quantityToSell;
+
+            // Update the sales amount in the accounts table
+            $sql = "UPDATE accounts SET account_balance = account_balance + $totalSaleAmount WHERE account_name = 'Sales'";
+            mysqli_query($connection, $sql);
+
+            // Display success message
+            echo '<p>Product sold successfully.</p>';
+        }
+    }
+
+    // Close the database connection
+    mysqli_close($connection);
 }
 ?>
+
 
 <!DOCTYPE html>
 <html>
@@ -32,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Your CSS styles here -->
     <style>
                 body {
-            font-family: Arial, sans-serif;
+            font-family: 'Nunito', sans-serif;
             background-color: #f2f2f2;
         }
 
