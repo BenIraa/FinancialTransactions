@@ -43,7 +43,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     }
 }
 
-// Calculate total balances for each category (e.g., total assets, total liabilities, etc.)
+// Calculate total balances for each category
 $totalAssets = 0;
 foreach ($assets as $asset) {
     $totalAssets += $asset['account_balance'];
@@ -144,39 +144,40 @@ mysqli_close($connection);
         </tr>
         <tr>
             <td>Total Assets</td>
-            <td><?php echo $totalAssets; ?></td>
+            <td><b><?php echo $totalAssets; ?></b></td>
         </tr>
 
         <!-- Display the liabilities -->
         <tr>
-            <th>Liabilities</th>
-            <th>Amount</th>
+            <td><b>Liabilities</b></td>
+            <!-- <th>Amount</th> -->
         </tr>
         <?php foreach ($liabilities as $liability) : ?>
             <tr>
                 <td><?php echo $liability['account_name']; ?></td>
                 <td><?php echo $liability['account_balance']; ?></td>
             </tr>
-            <tr>
-            <td>Total Liabilities</td>
-            <td><?php echo $totalLiabilities; ?></td>
-        </tr>
+            
         <?php endforeach; ?>
+        <tr>
+            <td>Total Liabilities</td>
+            <td><b><?php echo $totalLiabilities; ?></b></td>
+        </tr>
 
         <!-- Display the equity -->
         <tr>
-            <th>Equity</th>
-            <th>Amount</th>
+            <td><b>Equity</b></td>
+            <!-- <th>Amount</th> -->
         </tr>
         <?php foreach ($equity as $equityAccount) : ?>
             <tr>
                 <td><?php echo $equityAccount['account_name']; ?></td>
-                <td><?php echo $equityAccount['account_balance']; ?></td>
+                <td><b><?php echo $equityAccount['account_balance']; ?></b></td>
             </tr>
         <?php endforeach; ?>   
         <tr>
             <td>Total Equity</td>
-            <td><?php echo $totalEquity; ?></td>
+            <td><b><?php echo $totalEquity; ?></b></td>
         </tr>
        
     </table>

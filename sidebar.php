@@ -18,6 +18,7 @@
     <a href="view_sold_products.php">Sold Products</a>
     <a href="transactions.php">Transactions & Journal Entry</a>
     <a href="balance_sheet.php">Balance Sheet</a>
+    <a href="income_statements.php">Income Statemants</a>
 
 
     

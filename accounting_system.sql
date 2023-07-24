@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 24, 2023 at 10:48 AM
+-- Generation Time: Jul 24, 2023 at 02:11 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.0.13
 
@@ -43,8 +43,14 @@ INSERT INTO `accounts` (`account_id`, `account_name`, `account_type`, `account_b
 (5, 'Bank', 'Liability', 4995000),
 (7, 'Transport Expense Account', 'Expense', 5000),
 (8, 'Rent Expence', 'Expense', 0),
-(9, 'Sales', 'Income', 21100),
-(10, 'Tax Account', 'Expense', 5000);
+(9, 'Sales', 'Income', 22400),
+(10, 'Tax Account', 'Expense', 5000),
+(11, 'Machine', 'Asset', 1000000),
+(13, 'Account Payable', 'Liability', 500000),
+(14, 'Purchase transport', 'cogs', 500),
+(15, 'Purchase transport on rice ', 'cogs', 5000),
+(17, 'Inventory', 'Other', -1300),
+(18, 'Other Income', 'Income', 0);
 
 -- --------------------------------------------------------
 
@@ -87,11 +93,7 @@ CREATE TABLE `completed_purchase_orders` (
 --
 
 INSERT INTO `completed_purchase_orders` (`order_id`, `vendor_id`, `product_id`, `quantity`, `amount`, `order_date`, `completed_date`) VALUES
-(1, 1, 1, 60, 700, '2023-07-20', '0000-00-00'),
-(2, 2, 2, 20, 1000, '2023-07-20', '0000-00-00'),
-(3, 3, 3, 47, 1000, '2023-07-21', '0000-00-00'),
-(4, 1, 1, 60, 600, '2023-07-22', '0000-00-00'),
-(5, 1, 1, 60, 800, '2023-07-20', '0000-00-00');
+(6, 4, 4, 490, 1200, '2023-07-24', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -179,9 +181,7 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`product_id`, `product_name`, `description`, `unit_price`) VALUES
-(1, 'mitzing', 'measured in case', '1000.00'),
-(2, 'united gin', 'carto', '1000.00'),
-(3, 'umuceri', 'huye', '1000.00');
+(4, 'Umuceri', 'Lucky Rice', '1200.00');
 
 -- --------------------------------------------------------
 
@@ -233,9 +233,7 @@ CREATE TABLE `sold_products` (
 --
 
 INSERT INTO `sold_products` (`id`, `product_id`, `quantity_sold`, `price`, `date_sold`) VALUES
-(1, 1, 20, '800.00', '2023-07-24'),
-(2, 1, 20, '800.00', '2023-07-24'),
-(3, 3, 3, '1700.00', '2023-07-24');
+(5, 4, 10, '1300.00', '2023-07-24');
 
 -- --------------------------------------------------------
 
@@ -261,7 +259,8 @@ CREATE TABLE `transactions` (
 INSERT INTO `transactions` (`transaction_id`, `date`, `description`, `account_id`, `type`, `debit_account_id`, `credit_account_id`, `amount`) VALUES
 (1, '2023-07-22', 'Paid transport fee', 7, 'Debit', 7, 4, 5000),
 (2, '2023-07-15', 'Rent buildings', 5, 'Debit', 8, 5, 100000),
-(3, '2023-07-22', 'We Paid Tax ', 10, 'Debit', 10, 5, 5000);
+(3, '2023-07-22', 'We Paid Tax ', 10, 'Debit', 10, 5, 5000),
+(4, '2023-07-24', 'Sold 10kg of rice ', 9, 'Debit', 9, 17, 1300);
 
 -- --------------------------------------------------------
 
@@ -306,7 +305,8 @@ CREATE TABLE `vendors` (
 INSERT INTO `vendors` (`vendor_id`, `vendor_name`, `contact_person`, `email`, `phone`) VALUES
 (1, 'Bralirwa', '0781019415', 'bralirwa@gmail.com', NULL),
 (2, 'United GIN', 'manager', 'beniraa50@gmail.com', '0781019415'),
-(3, 'kigoli', 'Ben Iraa', 'beniraa50@gmail.com', '0781019415');
+(3, 'kigoli', 'Ben Iraa', 'beniraa50@gmail.com', '0781019415'),
+(4, 'Lucky Rice', 'Ben Iraa', 'beniraa50@gmail.com', '0781019415');
 
 --
 -- Indexes for dumped tables
@@ -421,7 +421,7 @@ ALTER TABLE `vendors`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `capital_contributions`
@@ -433,7 +433,7 @@ ALTER TABLE `capital_contributions`
 -- AUTO_INCREMENT for table `completed_purchase_orders`
 --
 ALTER TABLE `completed_purchase_orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `customers`
@@ -469,13 +469,13 @@ ALTER TABLE `journal_entry_items`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `purchase_orders`
 --
 ALTER TABLE `purchase_orders`
-  MODIFY `purchase_order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `purchase_order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `purchase_order_items`
@@ -487,13 +487,13 @@ ALTER TABLE `purchase_order_items`
 -- AUTO_INCREMENT for table `sold_products`
 --
 ALTER TABLE `sold_products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -505,7 +505,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `vendors`
 --
 ALTER TABLE `vendors`
-  MODIFY `vendor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `vendor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables

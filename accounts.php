@@ -126,6 +126,8 @@ mysqli_close($connection);
             <option value="Equity" <?php if ($account_type === 'Equity') echo 'selected'; ?>>Equity</option>
             <option value="Income" <?php if ($account_type === 'Income') echo 'selected'; ?>>Income</option>
             <option value="Expense" <?php if ($account_type === 'Expense') echo 'selected'; ?>>Expense</option>
+            <option value="cogs" <?php if ($account_type === 'COGS') echo 'selected'; ?>>Cost of Good sold</option>
+            <option value="Other" <?php if ($account_type === 'Other') echo 'selected'; ?>>Other</option>
         </select>
         <label for="account_balance">Account Balance:</label>
         <input type="number" name="account_balance"  value="0"  >

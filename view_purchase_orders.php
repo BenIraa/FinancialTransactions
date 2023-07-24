@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>View Purchase Orders</title>
+    <title>Pending Purchase Orders</title>
     <style>
         /* Your CSS styles for the specific page */
         body {
@@ -58,7 +58,7 @@
 </head>
 <body>
     <?php include 'sidebar.php'; ?>
-    <h2>Purchased Orders</h2>
+    <h2>Pending Purchased Orders</h2>
     <table class="invoice-table">
         <tr>
             <th>Purchase Order ID</th>

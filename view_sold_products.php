@@ -21,7 +21,7 @@
         table {
             width: 80%;
             margin: 20px auto;
-            margin-right: 10px ;
+            margin-right: 10px;
             border-collapse: collapse;
             background-color: #fff;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
@@ -50,6 +50,7 @@
             <th>Price (Existing)</th>
             <th>Sold Price</th>
             <th>Date Sold</th>
+            <th>Total</th>
         </tr>
         <?php
         // Establish a database connection (replace with your database credentials)
@@ -72,20 +73,33 @@
             die("Error fetching data: " . mysqli_error($connection));
         }
 
+        // Initialize the total amount variable
+        $totalAmount = 0;
+
         // Loop through each row of data and display it in the table
         while ($row = mysqli_fetch_assoc($result)) {
+            // Calculate the total for each row (quantity_sold * price)
+            $total = $row['quantity_sold'] * $row['price'];
+
             echo '<tr>';
             echo '<td>' . $row['product_name'] . '</td>';
             echo '<td>' . $row['quantity_sold'] . '</td>';
             echo '<td>' . $row['amount'] . '</td>';
             echo '<td>' . $row['price'] . '</td>';
             echo '<td>' . $row['date_sold'] . '</td>';
+            echo '<td>' . $total . '</td>';
             echo '</tr>';
+
+            // Add the row total to the total amount
+            $totalAmount += $total;
         }
 
         // Close the database connection
         mysqli_close($connection);
         ?>
     </table>
+
+    <!-- Display the sum of the "Total" column at the end of the table -->
+    <p>Total Amount: <?php echo $totalAmount; ?></p>
 </body>
 </html>
