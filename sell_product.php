@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Check if the quantity to sell is valid
         if ($quantityToSell > $availableQuantity) {
-            echo '<p>Cannot sell more quantity than available.</p>';
+            echo '<center><p style="color:red;">Cannot sell more quantity than available.</p></center>';
         } else {
             // Insert the sale data into the sold_products table
             $sql = "INSERT INTO sold_products (product_id, quantity_sold, price, date_sold) VALUES ($product_id, $quantityToSell, $soldPrice, '$dateSold')";
@@ -50,8 +50,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $totalSaleAmount = $soldPrice * $quantityToSell;
 
             // Update the sales amount in the accounts table
-            $sql = "UPDATE accounts SET account_balance = account_balance + $totalSaleAmount WHERE account_name = 'Sales'";
-            mysqli_query($connection, $sql);
+            // $sql = "UPDATE accounts SET account_balance = account_balance + $totalSaleAmount WHERE account_name = 'Sales'";
+            // mysqli_query($connection, $sql);
 
             // Display success message
             echo '<p>Product sold successfully.</p>';

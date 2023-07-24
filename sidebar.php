@@ -17,6 +17,8 @@
     <a href="view_inventory_stock.php">Inventory Stock</a>
     <a href="view_sold_products.php">Sold Products</a>
     <a href="transactions.php">Transactions & Journal Entry</a>
+    <a href="balance_sheet.php">Balance Sheet</a>
+
 
     
     <!-- Add more menu items as needed -->
