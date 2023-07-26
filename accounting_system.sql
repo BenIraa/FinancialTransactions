@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 24, 2023 at 02:11 PM
+-- Generation Time: Jul 26, 2023 at 01:13 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.0.13
 
@@ -39,18 +39,10 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`account_id`, `account_name`, `account_type`, `account_balance`) VALUES
-(4, 'Cash', 'Asset', 1995000),
-(5, 'Bank', 'Liability', 4995000),
-(7, 'Transport Expense Account', 'Expense', 5000),
-(8, 'Rent Expence', 'Expense', 0),
-(9, 'Sales', 'Income', 22400),
-(10, 'Tax Account', 'Expense', 5000),
-(11, 'Machine', 'Asset', 1000000),
-(13, 'Account Payable', 'Liability', 500000),
-(14, 'Purchase transport', 'cogs', 500),
-(15, 'Purchase transport on rice ', 'cogs', 5000),
-(17, 'Inventory', 'Other', -1300),
-(18, 'Other Income', 'Income', 0);
+(23, 'Cash', 'Asset', 0),
+(24, 'Sales', 'Income', 5000),
+(25, 'Inventory', 'Other', -5000),
+(26, 'Purchases', 'Asset', 0);
 
 -- --------------------------------------------------------
 
@@ -64,13 +56,6 @@ CREATE TABLE `capital_contributions` (
   `contribution_date` date NOT NULL,
   `amount` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `capital_contributions`
---
-
-INSERT INTO `capital_contributions` (`contribution_id`, `contributor_name`, `contribution_date`, `amount`) VALUES
-(1, 'Equity Loan', '2023-07-04', '467200.00');
 
 -- --------------------------------------------------------
 
@@ -87,13 +72,6 @@ CREATE TABLE `completed_purchase_orders` (
   `order_date` date NOT NULL,
   `completed_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `completed_purchase_orders`
---
-
-INSERT INTO `completed_purchase_orders` (`order_id`, `vendor_id`, `product_id`, `quantity`, `amount`, `order_date`, `completed_date`) VALUES
-(6, 4, 4, 490, 1200, '2023-07-24', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -181,7 +159,8 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`product_id`, `product_name`, `description`, `unit_price`) VALUES
-(4, 'Umuceri', 'Lucky Rice', '1200.00');
+(4, 'Umuceri', 'Lucky Rice', '1200.00'),
+(5, 'Inyange', 'Inyange Milk', '700.00');
 
 -- --------------------------------------------------------
 
@@ -217,6 +196,19 @@ CREATE TABLE `purchase_order_items` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `remaining_products`
+--
+
+CREATE TABLE `remaining_products` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `amount` decimal(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `sold_products`
 --
 
@@ -224,16 +216,10 @@ CREATE TABLE `sold_products` (
   `id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `quantity_sold` int(11) NOT NULL,
+  `remaining_quantity` int(11) NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `date_sold` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `sold_products`
---
-
-INSERT INTO `sold_products` (`id`, `product_id`, `quantity_sold`, `price`, `date_sold`) VALUES
-(5, 4, 10, '1300.00', '2023-07-24');
 
 -- --------------------------------------------------------
 
@@ -245,7 +231,7 @@ CREATE TABLE `transactions` (
   `transaction_id` int(11) NOT NULL,
   `date` date NOT NULL,
   `description` varchar(255) NOT NULL,
-  `account_id` int(11) NOT NULL,
+  `account_id` int(11) DEFAULT NULL,
   `type` varchar(50) NOT NULL,
   `debit_account_id` int(11) DEFAULT NULL,
   `credit_account_id` int(11) DEFAULT NULL,
@@ -257,10 +243,8 @@ CREATE TABLE `transactions` (
 --
 
 INSERT INTO `transactions` (`transaction_id`, `date`, `description`, `account_id`, `type`, `debit_account_id`, `credit_account_id`, `amount`) VALUES
-(1, '2023-07-22', 'Paid transport fee', 7, 'Debit', 7, 4, 5000),
-(2, '2023-07-15', 'Rent buildings', 5, 'Debit', 8, 5, 100000),
-(3, '2023-07-22', 'We Paid Tax ', 10, 'Debit', 10, 5, 5000),
-(4, '2023-07-24', 'Sold 10kg of rice ', 9, 'Debit', 9, 17, 1300);
+(9, '2023-07-26', 'Paid transport fee', NULL, 'Credit', 23, 25, 5000),
+(10, '2023-07-26', 'Sales goods', 24, 'Debit', 24, 25, 5000);
 
 -- --------------------------------------------------------
 
@@ -274,15 +258,16 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `full_name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `role` varchar(50) NOT NULL
+  `role` varchar(50) NOT NULL,
+  `company_name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `username`, `password`, `full_name`, `email`, `role`) VALUES
-(1, 'admin', '$2y$10$KLm.CwghZkIGfJ6Dm8S8AerrKCYV4wdHVPVsBR/PityAouKlF6Dr.', 'IRADUKUNDA Benjamin', 'beniraa50@gmail.com', 'administrator');
+INSERT INTO `users` (`user_id`, `username`, `password`, `full_name`, `email`, `role`, `company_name`) VALUES
+(1, 'admin', '$2y$10$KLm.CwghZkIGfJ6Dm8S8AerrKCYV4wdHVPVsBR/PityAouKlF6Dr.', 'IRADUKUNDA Benjamin', 'beniraa50@gmail.com', 'administrator', '');
 
 -- --------------------------------------------------------
 
@@ -306,7 +291,8 @@ INSERT INTO `vendors` (`vendor_id`, `vendor_name`, `contact_person`, `email`, `p
 (1, 'Bralirwa', '0781019415', 'bralirwa@gmail.com', NULL),
 (2, 'United GIN', 'manager', 'beniraa50@gmail.com', '0781019415'),
 (3, 'kigoli', 'Ben Iraa', 'beniraa50@gmail.com', '0781019415'),
-(4, 'Lucky Rice', 'Ben Iraa', 'beniraa50@gmail.com', '0781019415');
+(4, 'Lucky Rice', 'Ben Iraa', 'beniraa50@gmail.com', '0781019415'),
+(5, 'Inyange milk', 'Ben Iraa', 'beniraa50@gmail.com', '0781019415');
 
 --
 -- Indexes for dumped tables
@@ -387,6 +373,13 @@ ALTER TABLE `purchase_order_items`
   ADD KEY `product_id` (`product_id`);
 
 --
+-- Indexes for table `remaining_products`
+--
+ALTER TABLE `remaining_products`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
 -- Indexes for table `sold_products`
 --
 ALTER TABLE `sold_products`
@@ -421,7 +414,7 @@ ALTER TABLE `vendors`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `capital_contributions`
@@ -433,7 +426,7 @@ ALTER TABLE `capital_contributions`
 -- AUTO_INCREMENT for table `completed_purchase_orders`
 --
 ALTER TABLE `completed_purchase_orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `customers`
@@ -469,13 +462,13 @@ ALTER TABLE `journal_entry_items`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `purchase_orders`
 --
 ALTER TABLE `purchase_orders`
-  MODIFY `purchase_order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `purchase_order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `purchase_order_items`
@@ -484,28 +477,34 @@ ALTER TABLE `purchase_order_items`
   MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `remaining_products`
+--
+ALTER TABLE `remaining_products`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `sold_products`
 --
 ALTER TABLE `sold_products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `vendors`
 --
 ALTER TABLE `vendors`
-  MODIFY `vendor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `vendor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
@@ -543,6 +542,12 @@ ALTER TABLE `purchase_orders`
 ALTER TABLE `purchase_order_items`
   ADD CONSTRAINT `purchase_order_items_ibfk_1` FOREIGN KEY (`purchase_order_id`) REFERENCES `purchase_orders` (`purchase_order_id`),
   ADD CONSTRAINT `purchase_order_items_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
+
+--
+-- Constraints for table `remaining_products`
+--
+ALTER TABLE `remaining_products`
+  ADD CONSTRAINT `remaining_products_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
 
 --
 -- Constraints for table `sold_products`

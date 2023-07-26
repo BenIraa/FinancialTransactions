@@ -20,7 +20,8 @@
     <a href="balance_sheet.php">Balance Sheet</a>
     <a href="income_statements.php">Income Statemants</a>
     <a href="trial_balance.php">Trial Balance</a>
-    <a href="ledger.php">Ledger</a>
+    <a href="account_list.php">Ledger</a>
+    
 
 
     
