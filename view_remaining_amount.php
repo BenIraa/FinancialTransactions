@@ -1,4 +1,14 @@
 <?php
+// Start the session
+session_start();
+
+// Check if the user is logged in, if not, redirect to the login page
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.html");
+    exit();
+}
+?>
+<?php
 // Check if the "purchase_order_id" parameter is provided
 if (!isset($_GET['purchase_order_id']) || empty($_GET['purchase_order_id'])) {
     die('Invalid request. Please select a valid purchase order.');

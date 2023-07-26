@@ -1,4 +1,14 @@
 <?php
+// Start the session
+session_start();
+
+// Check if the user is logged in, if not, redirect to the login page
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.html");
+    exit();
+}
+?>
+<?php
 // Establish a database connection (replace with your database credentials)
 $connection = mysqli_connect('localhost', 'root', '', 'accounting_system');
 
@@ -79,7 +89,7 @@ mysqli_close($connection);
 </head>
 <body>
     <?php include 'sidebar.php'; ?>
-    <h2>Inventory Stock</h2>
+    <h2>Purchases</h2>
 
     <!-- Display the table with data from the "completed_purchase_orders" table -->
     <table>

@@ -16,9 +16,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (mysqli_query($connection, $query)) {
         echo "Purchase order created successfully!";
+        header("Location: view_purchase_orders.php");
+            exit();
     } else {
         echo "Error: " . mysqli_error($connection);
     }
+   
+    
 }
 
 // Close the database connection

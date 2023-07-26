@@ -1,4 +1,14 @@
 <?php
+// Start the session
+session_start();
+
+// Check if the user is logged in, if not, redirect to the login page
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.html");
+    exit();
+}
+?>
+<?php
 // Retrieve the product ID from the URL parameter
 if (isset($_GET['id'])) {
     $product_id = $_GET['id'];
@@ -38,20 +48,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($quantityToSell > $availableQuantity) {
             echo '<center><p style="color:red;">Cannot sell more quantity than available.</p></center>';
         } else {
-            // Insert the sale data into the sold_products table
-            $sql = "INSERT INTO sold_products (product_id, quantity_sold, price, date_sold) VALUES ($product_id, $quantityToSell, $soldPrice, '$dateSold')";
-            mysqli_query($connection, $sql);
-
-            // Update the remaining quantity in the completed_purchase_orders table
+            // Calculate the remaining quantity after the sale
             $remainingQuantity = $availableQuantity - $quantityToSell;
-            $sql = "UPDATE completed_purchase_orders SET quantity = $remainingQuantity WHERE product_id = $product_id";
-            mysqli_query($connection, $sql);
-            // Calculate the total sale amount (price * quantity) for the sale
-            $totalSaleAmount = $soldPrice * $quantityToSell;
 
-            // Update the sales amount in the accounts table
-            // $sql = "UPDATE accounts SET account_balance = account_balance + $totalSaleAmount WHERE account_name = 'Sales'";
-            // mysqli_query($connection, $sql);
+            // Insert the sale data into the sold_products table along with the calculated remaining quantity
+            $sql = "INSERT INTO sold_products (product_id, quantity_sold, remaining_quantity, price, date_sold) VALUES ($product_id, $quantityToSell, $remainingQuantity, $soldPrice, '$dateSold')";
+            mysqli_query($connection, $sql);
 
             // Display success message
             echo '<p>Product sold successfully.</p>';

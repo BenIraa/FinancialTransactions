@@ -1,4 +1,14 @@
 <?php
+// Start the session
+session_start();
+
+// Check if the user is logged in, if not, redirect to the login page
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.html");
+    exit();
+}
+?>
+<?php
 // Database connection (replace with your credentials)
 $connection = mysqli_connect('localhost', 'root', '', 'accounting_system');
 
@@ -9,7 +19,30 @@ if (!$connection) {
 
 // Retrieve accounts from the database
 $sql = "SELECT * FROM accounts";
+$inventory = "SELECT * FROM sold_products";
 $result = mysqli_query($connection, $sql);
+$result_inventory = mysqli_query($connection, $inventory);
+
+$inventory = " SELECT * FROM completed_purchase_orders";
+$result_inventory = mysqli_query($connection, $inventory);
+$purchaseDetails = [];
+$totalPurchases = 0;
+while ($row = mysqli_fetch_assoc($result_inventory)) {
+    $purchaseDetails[] = $row;
+    $totalPurchases += ($row['amount'] * $row['quantity']);
+}
+// retrive total remaining quantity
+$remaining = "SELECT sp.*, cpo.amount
+              FROM sold_products sp
+              JOIN completed_purchase_orders cpo ON sp.product_id = cpo.product_id";
+$result_remaining = mysqli_query($connection, $remaining);
+$remainingQuantityDetails = [];
+$soldQuantityAmount = 0;
+while ($row = mysqli_fetch_assoc($result_remaining)) {
+    $remainingQuantityDetails[] = $row;
+    $soldQuantityAmount += ($row['amount'] * $row['quantity_sold']);
+}
+$TotalRemainingQuantityAmount = $totalPurchases - $soldQuantityAmount;
 
 // Create separate arrays for different account types
 $assets = [];
@@ -17,8 +50,9 @@ $liabilities = [];
 $equity = [];
 $income = [];
 $expenses = [];
-$inventoryAmount = 0; // Variable to store the total amount of completed_purchase_orders
-
+$inventoryAmount = 0;
+$soldProducts = []; // Variable to store the total amount of completed_purchase_orders
+$purchaseDetails = [];
 // Categorize accounts based on account type
 while ($row = mysqli_fetch_assoc($result)) {
     switch ($row['account_type']) {
@@ -139,8 +173,8 @@ mysqli_close($connection);
 
         <!-- Display the completed_purchase_orders as assets -->
         <tr>
-            <td>Completed Purchase Orders (Inventory)</td>
-            <td><?php echo $inventoryAmount; ?></td>
+            <td>closing Inventory</td>
+            <td><?php echo $TotalRemainingQuantityAmount; ?></td>
         </tr>
         <tr>
             <td>Total Assets</td>

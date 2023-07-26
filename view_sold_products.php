@@ -1,3 +1,13 @@
+<?php
+// Start the session
+session_start();
+
+// Check if the user is logged in, if not, redirect to the login page
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.html");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,6 +57,7 @@
         <tr>
             <th>Product Name</th>
             <th>Quantity Sold</th>
+            <th>Remainng Quantity </th>
             <th>Price (Existing)</th>
             <th>Sold Price</th>
             <th>Date Sold</th>
@@ -62,7 +73,7 @@
         }
 
         // Fetch the sold product data from the "sold_products" table
-        $sql = "SELECT sp.product_id, p.product_name, sp.quantity_sold, cp.quantity, cp.amount, sp.price, sp.date_sold
+        $sql = "SELECT sp.product_id, p.product_name, sp.quantity_sold, cp.quantity, cp.amount, sp.price, sp.remaining_quantity, sp.date_sold
                 FROM sold_products sp
                 JOIN completed_purchase_orders cp ON sp.product_id = cp.product_id
                 JOIN products p ON sp.product_id = p.product_id";
@@ -84,6 +95,7 @@
             echo '<tr>';
             echo '<td>' . $row['product_name'] . '</td>';
             echo '<td>' . $row['quantity_sold'] . '</td>';
+            echo '<td>' . $row['remaining_quantity'] . '</td>';
             echo '<td>' . $row['amount'] . '</td>';
             echo '<td>' . $row['price'] . '</td>';
             echo '<td>' . $row['date_sold'] . '</td>';

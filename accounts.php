@@ -1,4 +1,14 @@
 <?php
+// Start the session
+session_start();
+
+// Check if the user is logged in, if not, redirect to the login page
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.html");
+    exit();
+}
+?>
+<?php
 // Establish a database connection (replace with your database credentials)
 $connection = mysqli_connect('localhost', 'root', '', 'accounting_system');
 
@@ -128,6 +138,7 @@ mysqli_close($connection);
             <option value="Expense" <?php if ($account_type === 'Expense') echo 'selected'; ?>>Expense</option>
             <option value="cogs" <?php if ($account_type === 'COGS') echo 'selected'; ?>>Cost of Good sold</option>
             <option value="Other" <?php if ($account_type === 'Other') echo 'selected'; ?>>Other</option>
+            <option value="Other_income" <?php if ($account_type === 'Otherincome') echo 'selected'; ?>>Other Income</option>
         </select>
         <label for="account_balance">Account Balance:</label>
         <input type="number" name="account_balance"  value="0"  >

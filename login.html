@@ -3,8 +3,13 @@
 <head>
     <title>User Login</title>
     <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
-            font-family: 'Nunito', sans-serif;
+            font-family: 'nunito', sans-serif;
             background-color: #f1f1f1;
         }
 
@@ -12,46 +17,68 @@
             text-align: center;
             color: #333;
         }
+        .container{
+            display: flex;
+            height: 500px;
+            width: 400px;
+            border: 1px solid black;
+            margin: auto;
+            margin-top: 50px;
+            box-shadow: 10px 10px 15px black;
 
-        form {
-            max-width: 300px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+        .form{
+            display: flex;
+            width: 100%;
+            align-items: center;
+            flex-direction: column;
+            background-color: whitesmoke;
 
-        label, input {
-            display: block;
-            margin-bottom: 10px;
         }
+        .form h2{
+            font-size: 3rem;
+            font-family: 'nunito', sans-serif;
+            margin: 40px;
+        }
+        .box{
+            padding: 12px;
+            width: 65%;
+            margin: 10px;
+            border: 1px solid black;
+            outline: none;
+            border-radius: 20px;
 
-        input[type="submit"] {
-            background-color: #4CAF50;
-            color: #fff;
-            padding: 10px;
+        }
+        #submit{
+            padding: 12px 30px;
+            width: 40%;
+            margin-top: 40px;
+            background-color: black;
+            color: white;
+            font-weight: bold;
             border: none;
-            border-radius: 5px;
-            cursor: pointer;
+            outline: none;
+            border-radius: 20px;
         }
-
-        input[type="submit"]:hover {
-            background-color: #45a049;
+        #submit:hover{
+            cursor: pointer;
+            background-color: #007535;    
         }
     </style>
 </head>
 <body>
-    <h2>User Login</h2>
-    <form action="login.php" method="post">
-        <label>Business/Company Name:</label>
-        <input type="text" name="username" required><br>
-
-        <label>Password:</label>
-        <input type="password" name="password" required><br>
-
-        <input type="submit" value="Login">
-    </form>
+    <div class="container">
+        <form action="login.php" method="post" class="form">
+            <h2>User Login</h2>
+            <label>Business/Company Name:</label>
+            <input type="text" name="username" class="box" required><br>
+    
+            <label>Password:</label>
+            <input type="password" name="password" class="box" required><br>
+            <a href="register.html" style="text-decoration: none;">Create Your Company Here</a>
+            
+            <input type="submit" value="Login" id="submit">
+        </form>
+    </div>
 </body>
 </html>

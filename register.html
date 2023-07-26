@@ -3,68 +3,91 @@
 <head>
     <title>User Registration</title>
     <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
             font-family: 'Nunito', sans-serif;
             background-color: #f1f1f1;
         }
+        .container{
+            display: flex;
+            height: 600px;
+            width: 400px;
+            border: 1px solid black;
+            margin: auto;
+            margin-top: 30px;
+            box-shadow: 8px 8px 13px black;
 
-        h2 {
-            text-align: center;
-            color: #333;
         }
+        .form{
+            display: flex;
+            width: 100%;
+            align-items: center;
+            flex-direction: column;
+            background-color: whitesmoke;
 
-        form {
-            max-width: 400px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-
-        label, input, select {
-            display: block;
-            margin-bottom: 10px;
+        .form h2{
+            font-size: 22px;
+            font-family: 'Nunito' sans-serif;
+            margin: 20px;
         }
-
-        input[type="submit"] {
-            background-color: #4CAF50;
-            color: #fff;
+        .box{
             padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+            width: 65%;
+            margin: 1px;
+            border: 1px solid black;
+            outline: none;
+            border-radius: 20px;
+            font-family: 'Nunito', sans-serif;
 
-        input[type="submit"]:hover {
-            background-color: #45a049;
+        }
+        #submit{
+            padding: 12px 15px;
+            width: 40%;
+            margin-top: 30px;
+            background-color: black;
+            color: white;
+            font-weight: bold;
+            border: none;
+            outline: none;
+            border-radius: 20px;
+        }
+        #submit:hover{
+            cursor: pointer;
+            background-color: #007535;    
         }
     </style>
 </head>
 <body>
-    <h2>Create Your Company/ Business</h2>
-    <form action="register.php" method="post">
-        <label>Business/Company Name:</label>
-        <input type="text" name="username" required><br>
+    <div class="container">
+        <form action="register.php" method="post" class="form">
+            <h2>Create Your Company/ Business</h2>
+            <label>Business/Company Name:</label>
+            <input type="text" name="username" class="box" required><br>
+    
+            <label>Password:</label>
+            <input type="password" name="password" class="box" required><br>
+    
+            <label>Full Name:</label>
+            <input type="text" name="full_name" class="box" required><br>
+    
+            <label>Email:</label>
+            <input type="email" name="email" class="box" required><br>
+    
+            <label>Role:</label>
+            <select name="role" class="box">
+                <option value="administrator">Administrator</option>
+                <option value="accountant">Accountant</option>
+                <option value="regular_user">Regular User</option>
+            </select><br>
+            <a href="login.html" style="text-decoration: none;">If you already have company Login Here</a>
+            <input type="submit" value="Register" id="submit">
+        </form>
 
-        <label>Password:</label>
-        <input type="password" name="password" required><br>
-
-        <label>Full Name:</label>
-        <input type="text" name="full_name" required><br>
-
-        <label>Email:</label>
-        <input type="email" name="email" required><br>
-
-        <label>Role:</label>
-        <select name="role">
-            <option value="administrator">Administrator</option>
-            <option value="accountant">Accountant</option>
-            <option value="regular_user">Regular User</option>
-        </select><br>
-
-        <input type="submit" value="Register">
-    </form>
+    </div>
 </body>
 </html>
