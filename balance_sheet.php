@@ -9,13 +9,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 ?>
 <?php
-// Database connection (replace with your credentials)
-$connection = mysqli_connect('localhost', 'root', '', 'accounting_system');
-
-// Check if the connection was successful
-if (!$connection) {
-    die("Connection failed: " . mysqli_connect_error());
-}
+include 'db_connection.php';
 
 // Retrieve accounts from the database
 $sql = "SELECT * FROM accounts";

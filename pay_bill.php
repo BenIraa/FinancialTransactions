@@ -7,12 +7,7 @@ if (!isset($_GET['purchase_order_id']) || empty($_GET['purchase_order_id'])) {
 $purchase_order_id = $_GET['purchase_order_id'];
 
 // Establish a database connection (replace with your database credentials)
-$connection = mysqli_connect('localhost', 'root', '', 'accounting_system');
-
-// Check if the connection was successful
-if (!$connection) {
-    die("Connection failed: " . mysqli_connect_error());
-}
+include 'db_connection.php';
 
 // Fetch the purchase order details for the given "purchase_order_id"
 $sql = "SELECT * FROM purchase_orders WHERE purchase_order_id = $purchase_order_id";

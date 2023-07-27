@@ -1,3 +1,13 @@
+<?php
+// Start the session
+session_start();
+
+// Check if the user is logged in, if not, redirect to the login page
+if (!isset($_SESSION['user_id'])) {
+    header("Location: index.html");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,8 +64,7 @@
 <body>
 <?php include 'sidebar.php'; ?>
     <?php
-    // Establish a database connection (replace with your database credentials)
-    $connection = mysqli_connect('localhost', 'root', '', 'accounting_system');
+    include 'db_connection.php';
 
     // Retrieve all accounts from the accounts table
     $accounts_query = "SELECT * FROM accounts";

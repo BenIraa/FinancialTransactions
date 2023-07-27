@@ -4,7 +4,7 @@ session_start();
 
 // Check if the user is logged in, if not, redirect to the login page
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.html");
+    header("Location: index.html");
     exit();
 }
 ?>
@@ -65,13 +65,7 @@ if (!isset($_SESSION['user_id'])) {
         </tr>
         <?php
         // Establish a database connection (replace with your database credentials)
-        $connection = mysqli_connect('localhost', 'root', '', 'accounting_system');
-
-        // Check if the connection was successful
-        if (!$connection) {
-            die("Connection failed: " . mysqli_connect_error());
-        }
-
+        include 'db_connection.php';
         // Fetch the sold product data from the "sold_products" table
         $sql = "SELECT sp.product_id, p.product_name, sp.quantity_sold, cp.quantity, cp.amount, sp.price, sp.remaining_quantity, sp.date_sold
                 FROM sold_products sp

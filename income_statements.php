@@ -4,19 +4,13 @@ session_start();
 
 // Check if the user is logged in, if not, redirect to the login page
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.html");
+    header("Location: index.html");
     exit();
 }
 ?>
 <?php
 // Database connection (replace with your credentials)
-$connection = mysqli_connect('localhost', 'root', '', 'accounting_system');
-
-// Check if the connection was successful
-if (!$connection) {
-    die("Connection failed: " . mysqli_connect_error());
-}
-
+include 'db_connection.php';
 // Retrieve data from the "sold_products" table
 $sql = "SELECT * FROM sold_products";
 $result = mysqli_query($connection, $sql);

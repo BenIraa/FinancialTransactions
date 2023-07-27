@@ -4,7 +4,7 @@ session_start();
 
 // Check if the user is logged in, if not, redirect to the login page
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.html");
+    header("Location: index.html");
     exit();
 }
 ?>
@@ -26,13 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $dateSold = $_POST['date'];
 
     // Establish a new database connection (replace with your database credentials)
-    $connection = mysqli_connect('localhost', 'root', '', 'accounting_system');
-
-    // Check if the connection was successful
-    if (!$connection) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
-
+    include 'db_connection.php';
     // Fetch the available quantity of the selected product from the completed_purchase_orders table
     $sql = "SELECT quantity FROM completed_purchase_orders WHERE product_id = $product_id";
     $result = mysqli_query($connection, $sql);

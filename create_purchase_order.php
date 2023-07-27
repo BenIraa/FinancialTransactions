@@ -1,7 +1,5 @@
 <?php
-// Establish a database connection (replace with your database credentials)
-$connection = mysqli_connect('localhost', 'root', '', 'accounting_system');
-
+include 'db_connection.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get purchase order data from the form
     $vendor_id = $_POST['vendor_id'];

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>User Registration</title>
+    <title>User Login</title>
     <style>
         *{
             margin: 0;
@@ -9,17 +9,22 @@
             box-sizing: border-box;
         }
         body {
-            font-family: 'Nunito', sans-serif;
+            font-family: 'nunito', sans-serif;
             background-color: #f1f1f1;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
         }
         .container{
             display: flex;
-            height: 600px;
+            height: 500px;
             width: 400px;
             border: 1px solid black;
             margin: auto;
-            margin-top: 30px;
-            box-shadow: 8px 8px 13px black;
+            margin-top: 50px;
+            box-shadow: 10px 10px 15px black;
 
         }
         .form{
@@ -31,24 +36,23 @@
 
         }
         .form h2{
-            font-size: 22px;
-            font-family: 'Nunito' sans-serif;
-            margin: 20px;
+            font-size: 3rem;
+            font-family: 'nunito', sans-serif;
+            margin: 40px;
         }
         .box{
-            padding: 10px;
+            padding: 12px;
             width: 65%;
-            margin: 1px;
+            margin: 10px;
             border: 1px solid black;
             outline: none;
             border-radius: 20px;
-            font-family: 'Nunito', sans-serif;
 
         }
         #submit{
-            padding: 12px 15px;
+            padding: 12px 30px;
             width: 40%;
-            margin-top: 30px;
+            margin-top: 40px;
             background-color: black;
             color: white;
             font-weight: bold;
@@ -64,30 +68,17 @@
 </head>
 <body>
     <div class="container">
-        <form action="register.php" method="post" class="form">
-            <h2>Create Your Company/ Business</h2>
+        <form action="login.php" method="post" class="form">
+            <h2>User Login</h2>
             <label>Business/Company Name:</label>
             <input type="text" name="username" class="box" required><br>
     
             <label>Password:</label>
             <input type="password" name="password" class="box" required><br>
-    
-            <label>Full Name:</label>
-            <input type="text" name="full_name" class="box" required><br>
-    
-            <label>Email:</label>
-            <input type="email" name="email" class="box" required><br>
-    
-            <label>Role:</label>
-            <select name="role" class="box">
-                <option value="administrator">Administrator</option>
-                <option value="accountant">Accountant</option>
-                <option value="regular_user">Regular User</option>
-            </select><br>
-            <a href="index.html" style="text-decoration: none;">If you already have company Login Here</a>
-            <input type="submit" value="Register" id="submit">
+            <a href="register.html" style="text-decoration: none;">Create Your Company Here</a>
+            
+            <input type="submit" value="Login" id="submit">
         </form>
-
     </div>
 </body>
 </html>

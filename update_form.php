@@ -1,11 +1,7 @@
 <?php
 // Establish a database connection (replace with your database credentials)
-$connection = mysqli_connect('localhost', 'root', '', 'accounting_system');
-
+include 'db_connection.php';
 // Check if the connection was successful
-if (!$connection) {
-    die("Connection failed: " . mysqli_connect_error());
-}
 
 if (isset($_GET['account_id'])) {
     $account_id = $_GET['account_id'];

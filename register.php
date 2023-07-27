@@ -1,7 +1,6 @@
 <?php
 // Establish a database connection (replace with your database credentials)
-$connection = mysqli_connect('localhost', 'root', '', 'accounting_system');
-
+include 'db_connection.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get user input from the form
     $username = $_POST['username'];

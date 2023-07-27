@@ -2,8 +2,8 @@
 // Start a new session
 session_start();
 
-// Establish a database connection (replace with your database credentials)
-$connection = mysqli_connect('localhost', 'root', '', 'accounting_system');
+// Include the database connection file
+include 'db_connection.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get user input from the form
@@ -31,7 +31,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "Invalid username or password.";
     }
 }
-
-// Close the database connection
-mysqli_close($connection);
 ?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <!-- Add your CSS styles for the login page here -->
+</head>
+<body>
+    <h2>Login</h2>
+    <form method="POST">
+        <label for="username">Username:</label>
+        <input type="text" name="username" required>
+
+        <label for="password">Password:</label>
+        <input type="password" name="password" required>
+
+        <input type="submit" value="Login">
+    </form>
+</body>
+</html>

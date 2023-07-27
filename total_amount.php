@@ -4,7 +4,7 @@ session_start();
 
 // Check if the user is logged in, if not, redirect to the login page
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.html");
+    header("Location: index.html");
     exit();
 }
 ?>
@@ -34,12 +34,7 @@ if (!isset($_SESSION['user_id'])) {
 <?php include 'sidebar.php'; ?>
     <?php
     // Establish a database connection (replace with your database credentials)
-    $connection = mysqli_connect('localhost', 'root', '', 'accounting_system');
-
-    // Check if the connection was successful
-    if (!$connection) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
+    include 'db_connection.php';
 
     // Fetch the account_balance for accounts named "Bank" and "Cash" from the accounts table
     $sql = "SELECT SUM(account_balance) AS total_amount FROM accounts WHERE account_name IN ('Bank', 'Cash')";

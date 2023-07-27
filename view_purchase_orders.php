@@ -4,7 +4,7 @@ session_start();
 
 // Check if the user is logged in, if not, redirect to the login page
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.html");
+    header("Location: index.html");
     exit();
 }
 ?>
@@ -82,12 +82,7 @@ if (!isset($_SESSION['user_id'])) {
         </tr>
         <?php
             // Database connection (replace with your database credentials)
-            $connection = mysqli_connect('localhost', 'root', '', 'accounting_system');
-
-            // Check if the connection was successful
-            if (!$connection) {
-                die("Connection failed: " . mysqli_connect_error());
-            }
+            include 'db_connection.php';
 
             // Fetch the purchase order data from the database
             $sql = "SELECT * FROM purchase_orders";

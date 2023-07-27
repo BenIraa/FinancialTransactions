@@ -4,7 +4,7 @@ session_start();
 
 // Check if the user is logged in, if not, redirect to the login page
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.html");
+    header("Location: index.html");
     exit();
 }
 ?>
@@ -16,12 +16,7 @@ if (!isset($_GET['purchase_order_id']) || empty($_GET['purchase_order_id'])) {
 $purchase_order_id = $_GET['purchase_order_id'];
 
 // Establish a database connection (replace with your database credentials)
-$connection = mysqli_connect('localhost', 'root', '', 'accounting_system');
-
-// Check if the connection was successful
-if (!$connection) {
-    die("Connection failed: " . mysqli_connect_error());
-}
+include 'db_connection.php';
 
 // Fetch the purchase order details for the given "purchase_order_id"
 $sql = "SELECT * FROM purchase_orders WHERE purchase_order_id = $purchase_order_id";
@@ -110,10 +105,7 @@ mysqli_close($connection);
         </tr>
         <?php
         // Establish a new database connection for fetching the contribution table data
-        $connection_contribution = mysqli_connect('localhost', 'root', '', 'accounting_system');
-        if (!$connection_contribution) {
-            die("Connection failed: " . mysqli_connect_error());
-        }
+        include 'db_connection.php';
 
         // Fetch the data from the "capital_contributions" table
         $sql_contribution = "SELECT * FROM capital_contributions";

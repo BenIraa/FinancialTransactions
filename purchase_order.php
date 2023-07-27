@@ -4,7 +4,7 @@ session_start();
 
 // Check if the user is logged in, if not, redirect to the login page
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.html");
+    header("Location: index.html");
     exit();
 }
 ?>
@@ -73,8 +73,7 @@ if (!isset($_SESSION['user_id'])) {
             <!-- Retrieve and populate vendor options from the database -->
             <?php
             // Establish a database connection (replace with your database credentials)
-            $connection = mysqli_connect('localhost', 'root', '', 'accounting_system');
-
+            include 'db_connection.php';
             // Retrieve vendors from the database
             $query = "SELECT vendor_id, vendor_name FROM vendors";
             $result = mysqli_query($connection, $query);
@@ -96,8 +95,7 @@ if (!isset($_SESSION['user_id'])) {
             <!-- Retrieve and populate product options from the database -->
             <?php
             // Establish a database connection (replace with your database credentials)
-            $connection = mysqli_connect('localhost', 'root', '', 'accounting_system');
-
+            include 'db_connection.php';
             // Retrieve products from the database
             $query = "SELECT product_id, product_name FROM products";
             $result = mysqli_query($connection, $query);
