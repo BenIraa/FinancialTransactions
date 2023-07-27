@@ -13,7 +13,6 @@
         }
 
         table {
-            
             border-collapse: collapse;
             width: 30%;
         }
@@ -30,6 +29,7 @@
     </style>
 </head>
 <body>
+<?php include 'sidebar.php'; ?>
     <?php
     // Establish a database connection (replace with your database credentials)
     $connection = mysqli_connect('localhost', 'root', '', 'accounting_system');
@@ -69,12 +69,14 @@
             <th>Cr Amount</th>
         </tr>
         <?php
-        $balance = 0;
+        $debit_total = 0;
+        $credit_total = 0;
         while ($transaction_row = mysqli_fetch_assoc($result_transactions)) {
             $debit = $transaction_row['type'] === 'Debit' ? $transaction_row['amount'] : '';
             $credit = $transaction_row['type'] === 'Credit' ? $transaction_row['amount'] : '';
 
-            $balance += $transaction_row['amount'];
+            $debit_total += $transaction_row['type'] === 'Debit' ? $transaction_row['amount'] : 0;
+            $credit_total += $transaction_row['type'] === 'Credit' ? $transaction_row['amount'] : 0;
 
             echo "<tr>";
             echo "<td>{$transaction_row['date']}</td>";
@@ -82,6 +84,44 @@
             echo "<td>{$credit}</td>";
             echo "</tr>";
         }
+
+        // Calculate the balance
+        $balance = $debit_total - $credit_total;
+
+        // Calculate the adjusted total amounts
+        if ($debit_total > $credit_total) {
+            $adjusted_debit_total = $debit_total + min(0, abs($balance));
+            $adjusted_credit_total = $debit_total > 0 ? $debit_total : 0;
+        } else {
+            $adjusted_debit_total = $credit_total > 0 ? $credit_total : 0;
+            $adjusted_credit_total = $credit_total + max(0, $balance);
+        }
+
+        // Display the balance row
+        echo "<tr>";
+        echo "<td><strong>c/b</strong></td>";
+        echo "<td><strong>";
+        if ($balance >= 0) {
+            echo $balance;
+        } else {
+            echo '';
+        }
+        echo "</strong></td>";
+        echo "<td><strong>";
+        if ($balance < 0) {
+            echo abs($balance);
+        } else {
+            echo '';
+        }
+        echo "</strong></td>";
+        echo "</tr>";
+
+        // Display the totals row
+        echo "<tr>";
+        echo "<td><strong>Totals</strong></td>";
+        echo "<td><strong>$adjusted_debit_total</strong></td>";
+        echo "<td><strong>$adjusted_credit_total</strong></td>";
+        echo "</tr>";
         ?>
     </table>
     </center>

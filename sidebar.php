@@ -7,7 +7,7 @@
         <!-- sidebar.php -->
 <div class="sidebar">
     <!-- Sidebar content and menu links -->
-    <!-- <a href="dashboard.php">Dashboard</a> -->
+    <a href="dashboard.php">Dashboard</a>
     <!-- <a href="create_record_capital.php">Record Capital</a> -->
     <a href="accounts.php">Account</a>
     <!-- <a href="total_amount.php">Total Balance (Bank & Cash)</a>   -->

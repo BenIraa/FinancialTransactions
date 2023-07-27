@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 26, 2023 at 01:13 PM
+-- Generation Time: Jul 27, 2023 at 04:44 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.0.13
 
@@ -40,9 +40,10 @@ CREATE TABLE `accounts` (
 
 INSERT INTO `accounts` (`account_id`, `account_name`, `account_type`, `account_balance`) VALUES
 (23, 'Cash', 'Asset', 0),
-(24, 'Sales', 'Income', 5000),
-(25, 'Inventory', 'Other', -5000),
-(26, 'Purchases', 'Asset', 0);
+(24, 'Sales', 'Income', 11000),
+(25, 'Inventory', 'Other', -8000),
+(26, 'Purchases', 'Asset', 0),
+(27, 'Bank', 'Asset', 600000);
 
 -- --------------------------------------------------------
 
@@ -243,7 +244,6 @@ CREATE TABLE `transactions` (
 --
 
 INSERT INTO `transactions` (`transaction_id`, `date`, `description`, `account_id`, `type`, `debit_account_id`, `credit_account_id`, `amount`) VALUES
-(9, '2023-07-26', 'Paid transport fee', NULL, 'Credit', 23, 25, 5000),
 (10, '2023-07-26', 'Sales goods', 24, 'Debit', 24, 25, 5000);
 
 -- --------------------------------------------------------
@@ -414,7 +414,7 @@ ALTER TABLE `vendors`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `capital_contributions`
@@ -492,7 +492,7 @@ ALTER TABLE `sold_products`
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `users`

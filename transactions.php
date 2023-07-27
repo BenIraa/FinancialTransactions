@@ -86,7 +86,8 @@ $result_accounts = mysqli_query($connection, $sql_fetch_accounts);
 
        
         form {
-            width: 60%;
+            font-family: 'Nunito', sans-serif;
+            width: 50%;
             margin: auto;
             margin-top: 20px;
             border: 1px solid #ccc;
@@ -94,6 +95,7 @@ $result_accounts = mysqli_query($connection, $sql_fetch_accounts);
         }
 
         form label {
+            font-family: 'Nunito', sans-serif;
             display: block;
             margin-bottom: 5px;
         }
@@ -102,8 +104,9 @@ $result_accounts = mysqli_query($connection, $sql_fetch_accounts);
         form input[type="date"],
         form input[type="number"],
         form select {
-            width: 100%;
-            padding: 8px;
+            font-family: 'Nunito', sans-serif;
+            width: 98%;
+            padding: 10px;
             margin-bottom: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -115,7 +118,7 @@ $result_accounts = mysqli_query($connection, $sql_fetch_accounts);
 
         form input[type="submit"] {
             width: 100%;
-            background-color: #4CAF50;
+            background-color: gray;
             color: white;
             padding: 12px 20px;
             border: none;
@@ -124,7 +127,7 @@ $result_accounts = mysqli_query($connection, $sql_fetch_accounts);
         }
 
         form input[type="submit"]:hover {
-            background-color: #45a049;
+            background-color: #0056b3;
         }
 
         table {
@@ -143,6 +146,18 @@ $result_accounts = mysqli_query($connection, $sql_fetch_accounts);
 
         table th {
             background-color: #f2f2f2;
+        }
+        /* Style for the "Delete" link */
+        a.delete-link {
+            color: #f00; /* Set the color to red */
+            text-decoration: none; /* Remove underline */
+            font-weight: bold; /* Make the text bold */
+            margin-right: 5px; /* Add some spacing to the right */
+        }
+
+        /* Style for the "Delete" link on hover */
+        a.delete-link:hover {
+            text-decoration: none; /* Add underline on hover */
         }
     </style>
 </head>
@@ -217,6 +232,7 @@ $result_accounts = mysqli_query($connection, $sql_fetch_accounts);
             <th>Debited Account</th>
             <th>Credit Account</th>
             <th>Amount</th>
+            <th>Action</th> <!-- New column for the delete button -->
 
         </tr>
         <?php
@@ -262,6 +278,8 @@ $result_accounts = mysqli_query($connection, $sql_fetch_accounts);
             echo '<td>' . $debit_account_name . '</td>';
             echo '<td>' . $credit_account_name . '</td>';
             echo '<td>' . $row_transactions['amount'] . '</td>';
+            // Add delete button with a link to delete_transaction.php passing the transaction_id as a parameter
+            echo '<td><a class="delete-link" href="delete_transaction.php?transaction_id=' . $row_transactions['transaction_id'] . '">Delete</a></td>';
             echo '</tr>';
         }
         ?>

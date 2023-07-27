@@ -4,9 +4,9 @@
     <title>Account List</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'nunito', sans-serif;
             background-color: #f2f2f2;
-            margin: 0;
+            margin-left: 250px;
             padding: 0;
         }
 

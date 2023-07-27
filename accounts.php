@@ -89,18 +89,46 @@ mysqli_close($connection);
         }
 
         form {
+            font-family: 'Nunito', sans-serif;
             width: 50%;
             margin: 20px auto;
             background-color: #fff;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
             padding: 20px;
+            border-radius: 4px;
+            
         }
 
-        input[type="text"], select, input[type="submit"] , input[type="number"]{
-            width: 100%;
-            padding: 10px;
+        form label {
+            font-family: 'Nunito', sans-serif;
+            display: block;
             margin-bottom: 10px;
         }
+
+        input[type="text"],
+        select,
+        input[type="submit"],
+        input[type="number"] {
+            font-family: 'Nunito', sans-serif;
+            width: 98%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: gray;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+
 
         table {
             width: 80%;
@@ -119,6 +147,29 @@ mysqli_close($connection);
 
         th {
             background-color: #f2f2f2;
+        }
+         /* Style for the "Delete" link */
+        a.delete-link {
+            color: #f00; /* Set the color to red */
+            text-decoration: none; /* Remove underline */
+            font-weight: bold; /* Make the text bold */
+            margin-right: 5px; /* Add some spacing to the right */
+        }
+
+        /* Style for the "Delete" link on hover */
+        a.delete-link:hover {
+            text-decoration: none; /* Add underline on hover */
+        }
+            /* Style for the "Update" link */
+        a.update-link {
+            color: #007bff; /* Set the color to blue */
+            text-decoration: none; /* Remove underline */
+            font-weight: bold; /* Make the text bold */
+        }
+
+        /* Style for the "Update" link on hover */
+        a.update-link:hover {
+            text-decoration: underline; /* Add underline on hover */
         }
     </style>
 </head>
@@ -162,6 +213,8 @@ mysqli_close($connection);
             <th>Account Name</th>
             <th>Account Type</th>
             <th>Account Balance</th>
+            <th>Actions</th>
+            
         </tr>
         <?php
         while ($row = mysqli_fetch_assoc($result)) {
@@ -170,6 +223,10 @@ mysqli_close($connection);
             echo '<td>' . $row['account_name'] . '</td>';
             echo '<td>' . $row['account_type'] . '</td>';
             echo '<td>' . $row['account_balance'] . '</td>';
+            
+            // Add delete button with a link to delete_account.php passing the account_id as a parameter
+            echo '<td><a class="delete-link" href="delete_account.php?account_id=' . $row['account_id'] . '">Delete</a></td>';
+            // echo '<a class="update-link" href="update_account.php?account_id=' . $row['account_id'] . '">Update</a>';
             echo '</tr>';
         }
         ?>

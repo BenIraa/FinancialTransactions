@@ -8,11 +8,11 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
     <title>Accounting System Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js">
     <style>
         /* Your dashboard and sidebar CSS styles */
         body {
@@ -30,33 +30,27 @@ if (!isset($_SESSION['user_id'])) {
 
         .dashboard-container {
             /* Your dashboard container styles */
-        }
-
-        .sidebar {
-            width: 200px;
-            height: 100%;
-            background-color: #333;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
             padding: 20px;
-            color: #fff;
-            position: fixed;
-            top: 0;
-            left: 0;
         }
 
-        .sidebar a {
-            display: block;
-            color: #fff;
-            text-decoration: none;
-            padding: 10px;
-            margin-bottom: 10px;
+        .dashboard-card {
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            width: 300px;
         }
 
-        .sidebar a:hover {
-            background-color: #555;
+        .dashboard-card h3 {
+            margin: 0;
         }
 
         .content {
-            margin-left: 220px; /* Adjust this to give space for the sidebar */
+            margin-left: 250px; /* Adjust this to give space for the sidebar */
             padding: 20px;
         }
     </style>
@@ -66,9 +60,84 @@ if (!isset($_SESSION['user_id'])) {
 
     <div class="content">
         <h2>Welcome, <?php echo $_SESSION['username']; ?>!</h2>
-        <!-- Your dashboard content here -->
-        <p>This is your accounting system dashboard.</p>
-        <p>You can add transactions, generate reports, and perform various accounting tasks here.</p>
+        <div class="dashboard-container">
+            <!-- Your dashboard content here -->
+            <div class="dashboard-card">
+                <h3>Total Transactions</h3>
+                <canvas id="totalTransactionsChart" width="300" height="150"></canvas>
+            </div>
+
+            <div class="dashboard-card">
+                <h3>Transaction Types</h3>
+                <canvas id="transactionTypesChart" width="300" height="150"></canvas>
+            </div>
+
+            <div class="dashboard-card">
+                <h3>Account Balances</h3>
+                <canvas id="accountBalancesChart" width="300" height="150"></canvas>
+            </div>
+        </div>
     </div>
+
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Sample data for the charts
+        const totalTransactionsData = {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+            datasets: [{
+                label: 'Total Transactions',
+                data: [65, 59, 80, 81, 56, 55],
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+            }]
+        };
+
+        const transactionTypesData = {
+            labels: ['Debit', 'Credit'],
+            datasets: [{
+                data: [75, 25],
+                backgroundColor: ['rgba(255, 99, 132, 0.6)', 'rgba(75, 192, 192, 0.6)'],
+            }]
+        };
+
+        const accountBalancesData = {
+            labels: ['Account 1', 'Account 2', 'Account 3', 'Account 4'],
+            datasets: [{
+                label: 'Account Balances',
+                data: [4000, 2500, 6000, 3500],
+                backgroundColor: 'rgba(153, 102, 255, 0.6)',
+            }]
+        };
+
+        // Chart configuration
+        const chartConfig = {
+            type: 'bar',
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        };
+
+        // Create charts
+        const totalTransactionsChart = new Chart(document.getElementById('totalTransactionsChart'), {
+            ...chartConfig,
+            data: totalTransactionsData
+        });
+
+        const transactionTypesChart = new Chart(document.getElementById('transactionTypesChart'), {
+            ...chartConfig,
+            type: 'pie',
+            data: transactionTypesData
+        });
+
+        const accountBalancesChart = new Chart(document.getElementById('accountBalancesChart'), {
+            ...chartConfig,
+            data: accountBalancesData
+        });
+    </script>
 </body>
 </html>
